@@ -2,16 +2,15 @@ import random
 
 class Grammar:
     def __init__(self):
-        # Define non-terminals (VN), terminals (VT), and production rules (P)
-        self.VN = {'S', 'A', 'B', 'C'}  # Non-terminals
-        self.VT = {'a', 'b'}  # Terminals
-        self.P = {  # Production rules
+        self.VN = {'S', 'A', 'B', 'C'}
+        self.VT = {'a', 'b'}
+        self.P = { 
             'S': ['aA'],
             'A': ['bS', 'aB'],
             'B': ['bC'],
             'C': ['aA', 'b']
         }
-        self.start_symbol = 'S'  # Start symbol
+        self.start_symbol = 'S'
     
     def generate_string(self, max_length=10):
         """Generate a random valid string based on the grammar rules."""
