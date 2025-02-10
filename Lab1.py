@@ -34,12 +34,11 @@ class Grammar:
 
 class FiniteAutomaton:
     def __init__(self, grammar):
-        # Define FA components: states, alphabet, start state, transitions, and final states
-        self.states = grammar.VN  # States from non-terminals
-        self.alphabet = grammar.VT  # Alphabet (valid input symbols)
-        self.start_state = grammar.start_symbol  # Initial state
-        self.transitions = {}  # Transition function
-        self.final_states = set()  # Set of final states
+        self.states = grammar.VN
+        self.alphabet = grammar.VT
+        self.start_state = grammar.start_symbol
+        self.transitions = {}
+        self.final_states = set()
 
         # Construct transitions and final states based on the grammar
         for non_terminal, productions in grammar.P.items():
