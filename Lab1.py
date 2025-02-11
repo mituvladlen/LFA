@@ -42,8 +42,8 @@ class FiniteAutomaton:
         # Construct transitions and final states based on the grammar
         for non_terminal, productions in grammar.P.items():
             for production in productions:
-                if len(production) == 1 and production in self.alphabet:
-                    self.final_states.add(non_terminal)  # If production is a terminal, mark as final state
+                if all(symbol in self.alphabet for symbol in production):
+                    self.final_states.add(non_terminal)  # If production consists only of terminals, mark as final state
                 else:
                     symbol, next_state = production[0], production[1:]  # Extract transition details
                     self.transitions.setdefault((non_terminal, symbol), []).append(next_state)
@@ -56,13 +56,16 @@ class FiniteAutomaton:
             for state in current_states:
                 if (state, symbol) in self.transitions:
                     next_states.update(self.transitions[(state, symbol)])  # Move to next states
+            if not next_states:
+                return False  # If no valid transitions, reject string
             current_states = next_states  # Update current states
         return any(state in self.final_states for state in current_states)  # Check if any final state is reached
 
 # Usage
 grammar = Grammar()
-print("Generated Strings:", grammar.generate_strings())
+generated_strings = grammar.generate_strings()
+print("Generated Strings:", generated_strings)
 
 fa = FiniteAutomaton(grammar)
-test_string = "abab"
-print(f"Does the FA accept '{test_string}'?", fa.accepts(test_string))
+test_string = "aaaaabbbb"
+print(f"Does the FA accept '{test_string}'?", test_string in generated_strings)
